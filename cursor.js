@@ -25,13 +25,15 @@ module.exports = function (since, getMeta) {
     return function (abort, cb) {
       if(abort) return cb(abort)
       var _cursor = cursor
+
+      if(test && !test(_cursor))
+        return cb(true)
       get(_cursor, function (err, value, prev, next) {
         //this should also handle ended state.
         if(err) return cb(err)
         cursor = reverse ? prev : next
-        if(test && !test(_cursor, value))
-          cb(true)
-        else if(meta)
+
+        if(meta)
           cb(null, {seq: _cursor, value: value})
         else
           cb(null, value)

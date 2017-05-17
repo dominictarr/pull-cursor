@@ -1,18 +1,23 @@
-
+'use strict'
 var range = require('./range')
 var Skip = require('./skip')
 var createCursor = require('./cursor')
 var Take = require('pull-stream/throughs/take')
 
 function Test(opts) {
-  if(opts.end)
-    return function (seq) { return opts.reverse ? seq > end : seq < end }
-  if(opts.end != null && opts.endInclusive) {
-    var once = true
+  var end = opts.end
+  if(end == null) return
+  if(!opts.endInclusive) {
+    return function (seq) {
+      return opts.reverse ? seq > end : seq < end
+    }
+  }
+  else {
+    var once = false
     return function (seq) {
       if(once)
         return false
-      if(!(opts.reverse ? seq > end : seq < end))
+      else if(!(opts.reverse ? seq > end : seq < end))
         return once = true
       else
         return true
@@ -41,13 +46,4 @@ module.exports = function (since, getMeta) {
     return stream
   }
 }
-
-
-
-
-
-
-
-
-
 
