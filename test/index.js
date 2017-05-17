@@ -169,4 +169,52 @@ tape('stream, live', function (t) {
   t.end()
 })
 
+tape('stream, lt', function (t) {
+  var input = ['a', 'b', 'c']
+  var mock = createMock(input)
+
+  var Stream = createStream(mock.since, mock.getMeta)
+
+  pull(
+    Stream({lt: 2}),
+    pull.collect(function (err, ary) {
+      if(err) throw err
+      t.deepEqual(ary, input.slice(0, 2))
+      t.end()
+    })
+  )
+
+})
+
+tape('stream, lte', function (t) {
+  var input = ['a', 'b', 'c']
+  var mock = createMock(input)
+
+  var Stream = createStream(mock.since, mock.getMeta)
+
+  pull(
+    Stream({lte: 1}),
+    pull.collect(function (err, ary) {
+      if(err) throw err
+      t.deepEqual(ary, input.slice(0, 2))
+      t.end()
+    })
+  )
+})
+
+tape('stream, lte', function (t) {
+  var input = ['a', 'b', 'c']
+  var mock = createMock(input)
+
+  var Stream = createStream(mock.since, mock.getMeta)
+
+  pull(
+    Stream({lte: 2, live: true}),
+    pull.collect(function (err, ary) {
+      if(err) throw err
+      t.deepEqual(ary, input)
+      t.end()
+    })
+  )
+})
 
