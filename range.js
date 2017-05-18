@@ -17,7 +17,8 @@ module.exports = function (opts) {
     reverse: !!opts.reverse,
     live: opts.live,
     old: opts.old,
-    limit: opts.limit
+    limit: opts.limit,
+    seqs: opts.seqs, values: opts.values
   }
 }
 
