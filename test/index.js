@@ -231,11 +231,30 @@ tape('stream, {}', function (t) {
       t.deepEqual(ary, [
         {seq:0,value: 'a'},
         {seq:1,value: 'b'},
-        {seq:2,value: 'b'}
+        {seq:2,value: 'c'}
+      ])
+      t.end()
+    })
+  )
+})
+
+tape('stream, gt, reverse, seqs', function (t) {
+  var input = ['a', 'b', 'c']
+  var mock = createMock(input)
+
+  var Stream = createStream(mock.since, mock.getMeta)
+  pull(
+    Stream({gt:0, reverse: true}),
+    pull.collect(function (err, ary) {
+      if(err) throw err
+      t.deepEqual(ary, [
+        {seq:2,value: 'c'},
+        {seq:1,value: 'b'}
       ])
       t.end()
     })
   )
 
-
 })
+
+
