@@ -114,7 +114,7 @@ tape('stream, gte', function (t) {
   var Stream = createStream(mock.since, mock.getMeta)
 
   pull(
-    Stream({gte: 0}),
+    Stream({gte: 0, seqs: false}),
     pull.collect(function (err, ary) {
       if(err) throw err
       t.deepEqual(ary, input)
@@ -131,7 +131,7 @@ tape('stream, gt', function (t) {
   var Stream = createStream(mock.since, mock.getMeta)
 
   pull(
-    Stream({gt: 0}),
+    Stream({gt: 0, seqs: false}),
     pull.collect(function (err, ary) {
       if(err) throw err
       t.deepEqual(ary, input.slice(1))
@@ -150,7 +150,7 @@ tape('stream, live', function (t) {
   var Stream = createStream(mock.since, mock.getMeta)
 
   pull(
-    Stream({old: false}),
+    Stream({old: false, seqs: false}),
     pull.drain(function (item) {
       output.push(item)
     })
@@ -176,7 +176,7 @@ tape('stream, lt', function (t) {
   var Stream = createStream(mock.since, mock.getMeta)
 
   pull(
-    Stream({lt: 2}),
+    Stream({lt: 2, seqs: false}),
     pull.collect(function (err, ary) {
       if(err) throw err
       t.deepEqual(ary, input.slice(0, 2))
@@ -193,7 +193,7 @@ tape('stream, lte', function (t) {
   var Stream = createStream(mock.since, mock.getMeta)
 
   pull(
-    Stream({lte: 1}),
+    Stream({lte: 1, seqs: false}),
     pull.collect(function (err, ary) {
       if(err) throw err
       t.deepEqual(ary, input.slice(0, 2))
@@ -209,7 +209,7 @@ tape('stream, lte', function (t) {
   var Stream = createStream(mock.since, mock.getMeta)
 
   pull(
-    Stream({lte: 2, live: true}),
+    Stream({lte: 2, live: true, seqs: false}),
     pull.collect(function (err, ary) {
       if(err) throw err
       t.deepEqual(ary, input)
@@ -217,4 +217,5 @@ tape('stream, lte', function (t) {
     })
   )
 })
+
 
