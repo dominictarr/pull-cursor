@@ -23,7 +23,16 @@ function Test(opts) {
         return true
     }
   }
+}
 
+function Format (seqs, values) {
+  return function (seq, value) {
+    return (
+      seqs
+      ? (values ? {value: value, seq: seq} : seq)
+      : value
+    )
+  }
 }
 
 module.exports = function (since, getMeta) {
@@ -35,7 +44,7 @@ module.exports = function (since, getMeta) {
       opts.old === false ? null : opts.start,
       opts.live || (opts.old === false),
       opts.reverse,
-      opts.seqs,
+      Format(opts.seqs !== false, opts.values !== false),
       Test(opts)
     )
 

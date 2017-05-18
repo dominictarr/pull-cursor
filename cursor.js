@@ -1,7 +1,8 @@
 
 module.exports = function (since, getMeta) {
-  return function (cursor, live, reverse, meta, test) {
-
+  return function (cursor, live, reverse, format, test) {
+    if(!format)
+      format = function (_, value) { return value }
     function get (offset, cb) {
       since.once(function (_offset) {
         if(offset == null)
@@ -32,11 +33,7 @@ module.exports = function (since, getMeta) {
         //this should also handle ended state.
         if(err) return cb(err)
         cursor = reverse ? prev : next
-
-        if(meta)
-          cb(null, {seq: _cursor, value: value})
-        else
-          cb(null, value)
+        cb(null, format(_cursor, value))
       })
     }
   }
