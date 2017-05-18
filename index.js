@@ -38,7 +38,7 @@ function Format (seqs, values) {
 module.exports = function (since, getMeta) {
   var Cursor = createCursor(since, getMeta)
   return function (opts) {
-    opts = range(opts)
+    opts = range(opts || {})
 
     var stream = Cursor(
       opts.old === false ? null : opts.start,
