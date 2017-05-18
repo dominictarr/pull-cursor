@@ -218,4 +218,24 @@ tape('stream, lte', function (t) {
   )
 })
 
+tape('stream, {}', function (t) {
+  var input = ['a', 'b', 'c']
+  var mock = createMock(input)
 
+  var Stream = createStream(mock.since, mock.getMeta)
+
+  pull(
+    Stream({}),
+    pull.collect(function (err, ary) {
+      if(err) throw err
+      t.deepEqual(ary, [
+        {seq:0,value: 'a'},
+        {seq:1,value: 'b'},
+        {seq:2,value: 'b'}
+      ])
+      t.end()
+    })
+  )
+
+
+})
