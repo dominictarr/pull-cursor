@@ -9,11 +9,11 @@
   },
   "dependencies": {
     "looper": "^4.0.0",
-    "ltgt": "^2.2.0"
+    "ltgt": "^2.2.0",
+    "pull-stream": "^3.6.0"
   },
   "devDependencies": {
     "obv": "0.0.1",
-    "pull-stream": "^3.6.0",
     "tape": "^4.6.3"
   },
   "scripts": {
