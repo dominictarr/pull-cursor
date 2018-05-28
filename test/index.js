@@ -8,7 +8,7 @@ function createMock(ary) {
   var since = Obv()
   since.set(ary.length - 1)
   return {
-    getMeta: function (o, cb) {
+    getMeta: function (o, cache, cb) {
       if(o < 0 || o >= ary.length)
         cb(new Error('out of bounds:'+o))
       else
@@ -292,45 +292,3 @@ tape('stream, gt:-1, reverse', function (t) {
     })
   )
 })
-
-tape('stream, performance', function (t) {
-  var input = []
-  for (var i = 0; i < 1E5; ++i)
-    input.push(i)
-  var mock = createMock(input)
-
-  console.time('streaming 100.000 numbers')
-  
-  var Stream = createStream(mock.since, mock.getMeta)
-  pull(
-    Stream(),
-    pull.drain(function (v) {
-    }, function() {
-
-      console.timeEnd('streaming 100.000 numbers')
-      t.end()
-    })
-  )
-})
-
-var Cache = require('hashlru')
-
-tape('stream, performance cache', function (t) {
-  var input = []
-  for (var i = 0; i < 1E5; ++i)
-    input.push(i)
-  var mock = createMock(input)
-
-  console.time('streaming 100.000 numbers with cache')
-  
-  var Stream = createStream(mock.since, mock.getMeta)
-  pull(
-    Stream({ cache: Cache(1000) }),
-    pull.drain(function (v) {
-    }, function() {
-      console.timeEnd('streaming 100.000 numbers with cache')
-      t.end()
-    })
-  )
-})
-
