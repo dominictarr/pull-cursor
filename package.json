@@ -14,7 +14,6 @@
   },
   "devDependencies": {
     "obv": "0.0.1",
-    "hashlru": "2.2.1",
     "tape": "^4.6.3"
   },
   "scripts": {
