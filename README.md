@@ -48,6 +48,7 @@ levelup or flumedb stream. including
 * `lt` (offset) items less than a given offset
 * `lte` (offset) items less than or equal to a given offset
 * `limit` (number) stop after N items.
+* `cache` (hashlru) supply a cache for caching lookups
 
 ## License
 

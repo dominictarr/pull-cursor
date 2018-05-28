@@ -1,4 +1,3 @@
-
 var tape = require('tape')
 var pull = require('pull-stream')
 
@@ -254,7 +253,6 @@ tape('stream, gt, reverse, seqs', function (t) {
       t.end()
     })
   )
-
 })
 
 tape('stream, gt:-1', function (t) {
@@ -274,7 +272,6 @@ tape('stream, gt:-1', function (t) {
       t.end()
     })
   )
-
 })
 
 tape('stream, gt:-1, reverse', function (t) {
@@ -294,7 +291,46 @@ tape('stream, gt:-1, reverse', function (t) {
       t.end()
     })
   )
-
 })
 
+tape('stream, performance', function (t) {
+  var input = []
+  for (var i = 0; i < 1E5; ++i)
+    input.push(i)
+  var mock = createMock(input)
+
+  console.time('streaming 100.000 numbers')
+  
+  var Stream = createStream(mock.since, mock.getMeta)
+  pull(
+    Stream(),
+    pull.drain(function (v) {
+    }, function() {
+
+      console.timeEnd('streaming 100.000 numbers')
+      t.end()
+    })
+  )
+})
+
+var Cache = require('hashlru')
+
+tape('stream, performance cache', function (t) {
+  var input = []
+  for (var i = 0; i < 1E5; ++i)
+    input.push(i)
+  var mock = createMock(input)
+
+  console.time('streaming 100.000 numbers with cache')
+  
+  var Stream = createStream(mock.since, mock.getMeta)
+  pull(
+    Stream({ cache: Cache(1000) }),
+    pull.drain(function (v) {
+    }, function() {
+      console.timeEnd('streaming 100.000 numbers with cache')
+      t.end()
+    })
+  )
+})
 

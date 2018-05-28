@@ -23,6 +23,7 @@ module.exports = function (opts) {
     live: opts.live,
     old: opts.old,
     limit: opts.limit,
-    seqs: opts.seqs, values: opts.values
+    seqs: opts.seqs, values: opts.values,
+    cache: opts.cache
   }
 }

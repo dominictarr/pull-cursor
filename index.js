@@ -45,7 +45,8 @@ module.exports = function (since, getMeta) {
       opts.live || (opts.old === false),
       opts.reverse,
       Format(opts.seqs !== false, opts.values !== false),
-      Test(opts)
+      Test(opts),
+      opts.cache
     )
 
     if(!opts.startInclusive || opts.old === false)
