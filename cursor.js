@@ -23,23 +23,12 @@ module.exports = function (since, getMeta) {
           cb(true) //end of the stream
 
         function next () {
-          if (cache) {
-            var c = cache.get(cursor)
-            if (c) {
-              cb(null, c)
-              return
-            }
-          }
-
-          getMeta(cursor, function (err, value, prev, next) {
+          getMeta(cursor, cache, function (err, value, prev, next) {
             //this should also handle ended state.
             if(err) return cb(err)
             var _cursor = cursor
             cursor = reverse ? prev : next
-            var r = format(_cursor, value)
-            if (cache)
-              cache.set(_cursor, r)
-            cb(null, r)
+            cb(null, format(_cursor, value))
           })
         }
       })

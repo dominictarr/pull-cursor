@@ -13,21 +13,22 @@ var inject = require('pull-cursor')
 
 ### inject(since, getMeta) => createStream(opts)
 
-`since` is an `obv` instance, which represents the current length
-of the dataset. `getMeta` is a function that takes an offset
-and callsback the value, and the `next` and `prev` offsets.
+`since` is an `obv` instance, which represents the current length of
+the dataset. `getMeta` is a function that takes an offset, an option
+to use caching and callback the value plus the `next` and `prev`
+offsets.
 
 ``` js
 var Obv = require('obv')
 var since = Obv()
 
-//dummp example with an array as the datastore
+//dummy example with an array as the datastore
 var ary = ['A', 'B', 'C', 'D']
 since.set(ary.length - 1) //set since to last index!
 
 var createStream = require('pull-cursor')(
   since,
-  function (offset, cb) {
+  function (offset, useCache, cb) {
     if(offset < 0 || offset >= ary.length)
       return cb(new Error('out of bounds:'+offset)
 
@@ -48,7 +49,7 @@ levelup or flumedb stream. including
 * `lt` (offset) items less than a given offset
 * `lte` (offset) items less than or equal to a given offset
 * `limit` (number) stop after N items.
-* `cache` (hashlru) supply a cache for caching lookups
+* `cache` (boolean) use cache of underlying
 
 ## License
 

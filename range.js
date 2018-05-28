@@ -24,6 +24,6 @@ module.exports = function (opts) {
     old: opts.old,
     limit: opts.limit,
     seqs: opts.seqs, values: opts.values,
-    cache: opts.cache
+    cache: opts.cache !== false
   }
 }
