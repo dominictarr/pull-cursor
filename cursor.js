@@ -14,7 +14,7 @@ module.exports = function (since, getMeta) {
         if(cursor == null)
           cursor = _offset
 
-        if(cursor < 0)
+        if(cursor < 0 && reverse)
           cb(true)
         else if(cursor <= _offset)
           next()
