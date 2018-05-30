@@ -59,6 +59,25 @@ tape('simple, live', function (t) {
   t.end()
 })
 
+tape('empty live', function (t) {
+  var input = []
+  var mock = createMock(input)
+  var output = []
+  var Cursor = createCursor(mock.since, mock.getMeta)
+
+  pull(
+    Cursor(0, true),
+    pull.drain(function (item) {
+      output.push(item)
+    }, function () {
+      throw new Error('should not end')
+    })
+  )
+
+  t.end()
+
+})
+
 
 tape('simple, live', function (t) {
   var input = ['a', 'b', 'c']
@@ -71,6 +90,8 @@ tape('simple, live', function (t) {
     Cursor(null, true),
     pull.drain(function (item) {
       output.push(item)
+    }, function () {
+      throw new Error("live stream shouldn't end")
     })
   )
 
@@ -292,3 +313,4 @@ tape('stream, gt:-1, reverse', function (t) {
     })
   )
 })
+
